@@ -1,0 +1,4 @@
+what is kubernetes ?
+
+also known as k8s ,
+it is an open-source systrem for automating deployemnet , management of containerized apps and scaling

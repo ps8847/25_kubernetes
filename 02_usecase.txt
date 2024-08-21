@@ -1,0 +1,10 @@
+
+use case ?
+
+suppose there's nodejs aplicatiopn running on server ..
+it can be fall into these cases -> what if this sever fails ?
+                                   ans ->  i have backup nodes ( servers )   ... if one down alternative will run
+
+                how to manage these nodes ? 
+
+                the solution is -> KUBERNETES 

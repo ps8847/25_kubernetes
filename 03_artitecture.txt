@@ -1,0 +1,16 @@
+Artitecture of Kubernetes : 
+
+    when you deploy kubernetes ,  you get a cluster ( group of nodes ).
+
+    two important parts are : 
+    * Master ( Control Panel ) &
+    * Worker nodes
+
+
+
+                                            Master (Api Server + Scheduler + ETCD + Control Manager )
+                                              |
+                      ________________________|_______________________
+                      |                       |                      |
+                      |                       |                      |
+                    worker node            workder node            worker node  

@@ -1,0 +1,1 @@
+search on google "kubernetes install "   and follow the steps on kubenetes.io 

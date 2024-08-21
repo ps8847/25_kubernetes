@@ -1,0 +1,4 @@
+what is a pod ?
+
+a single instance of a running process in a cluster.
+it can run onr or more containers and share the same resources .

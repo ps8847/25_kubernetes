@@ -1,0 +1,27 @@
+
+Components : 
+
+    * Api server 
+    * Container Runtime
+    * Scheduler
+    * kUBE CONTROLLER
+    * Kubelet
+    * ETCD
+    * kube proxy 
+
+
+
+Master NODE Components: 
+
+ API Server : connects the master to the workers 
+ Scheduler : assign node to newly created pods 
+ ETCD : key-value store , having all cluster data 
+ Control Manager : responsible for managing the state of the cluster 
+
+
+Worker NODE Components: 
+
+    kubelet : Agent ,  make sure containers running in pods 
+    Pod   : isolated container run in a pod 
+    kube-porxy :  Maintains network rules for comm with pods 
+    container-runtime : a tool responsible for running containers
