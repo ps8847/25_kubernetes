@@ -1,0 +1,15 @@
+                        Master (Api Server + Scheduler + ETCD + Control Manager )
+                                              |
+                      ________________________|________________________________________________________
+                      |                       |                      |                                 |
+                      |                       |                      |                                 |
+                    worker node            workder node            worker node                       n worker
+
+
+here we will get the knowledge of how to just only intereact with Mastwr Node and it will do oits work automactially 
+
+
+1) we have kubeCTL which helps us to interact with the Master node ( master mind of k8s)  and furtehr interact with worker nodes
+2) we can implements "Config" and "Secrets" as global things to make it accessible to worker nodes 
+3) our worker node will be consist of "deployement" and "service" kind of things and to interact with the outer world it will has "NodePort" kind of thing
+

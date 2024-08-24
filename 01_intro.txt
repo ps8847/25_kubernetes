@@ -1,4 +1,12 @@
+prerequisites :  Docker , Containariazation and about knowledge about images
+
 what is kubernetes ?
 
 also known as k8s ,
 it is an open-source systrem for automating deployemnet , management of containerized apps and scaling
+
+Note :  kubernetes is really aa advance concept also the core part of the porper Devops Roadmap .. specially it works with the paid technoclogies like aws , azure and some other stuff .. we will cover only the beginner level stuff here to go though the major and core functionality of it 
+
+
+Also the k8s is a paid thing to properly learn and work with it  ..
+so here we will learn it with its demo and playaround version ...

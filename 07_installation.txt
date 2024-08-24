@@ -1,1 +1,22 @@
-search on google "kubernetes install "   and follow the steps on kubenetes.io 
+search on google "kubernetes install" and follow the steps on kubenetes.io 
+
+we need to have docker installed also
+
+we need to install kubernetes and minikube
+
+kubernetes :  ( follow the offical documentation)
+
+1) install chocolatey 
+
+
+2)   >> choco install kubernetes-cli
+     >> kubectl version --client
+     >> cd %USERPROFILE%
+     >> mkdir .kube
+     >> cd .kube
+     >> Go to that .kube file location and create aa text file as "config"   thats it
+
+
+Install minikube ( GO TO minikube installation documentation )
+
+1) choco install minikube

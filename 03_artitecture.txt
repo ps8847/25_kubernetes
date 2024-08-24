@@ -10,7 +10,7 @@ Artitecture of Kubernetes :
 
                                             Master (Api Server + Scheduler + ETCD + Control Manager )
                                               |
-                      ________________________|_______________________
-                      |                       |                      |
-                      |                       |                      |
-                    worker node            workder node            worker node  
+                      ________________________|________________________________________________________
+                      |                       |                      |                                 |
+                      |                       |                      |                                 |
+                    worker node            workder node            worker node                       n worker

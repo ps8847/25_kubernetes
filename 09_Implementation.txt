@@ -1,0 +1,151 @@
+we will create aa folder named "Kube-mern" or whatever you like  
+
+first we will make "Secrets" ->  there are alott of ways of adding secrets to our project we can follow offical documentation  
+
+1) we will create file named  secret.yaml or wehatever name.yaml with following stuff 
+
+    apiVersion: v1
+    kind: Secret
+    metadata:
+        name: mongo-secret
+    type: Opaque
+    data:
+        USER_NAME : bW9uZ291c2Vy (it should be base64 hased value not plain text)                             -> variable-name : base64 hashed value
+        PASSWORD : bW9uZ29wYXNzd29yZA==      (it should be base64 hased value not plain text)                             -> variable-name : base64 hashed value
+
+
+2) if we have a dtaabase in our application we will be needed a configuration file .. so for that we need to create file named same as upper like : mongo-config.yaml and will follow the following stuff
+
+    apiVersion: v1
+    kind:   ConfigMap
+    metadata:
+        name: mongo-config
+    data:
+        mongo-url : # will be added later 
+
+3) Deployement -> ( get about this from documentation ) we will now deploy mongodb ... its really simple and easy ..  we wil create file nbamed weith .yaml as below  ( mongo-app.yaml )
+        we will be providing the deployement information and environment variables 
+
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+        name: mongo-deployment
+        labels:
+            app: mongo
+        spec:
+        replicas: 1
+        selector:
+            matchLabels:
+            app: mongo
+        template:
+            metadata:
+            labels:
+                app: mongo
+            spec:
+            containers:
+            - name: mongo
+                image: mongo:6.0
+                ports:
+                - containerPort: 27017
+                env:
+                - name: MONGO_INITDB_ROOT_USERNAME
+                valueFrom:
+                    secretKeyRef:
+                    name: secret
+                    key: mongo-user
+                - name: MONGO_INITDB_ROOT_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                    name: secret
+                    key: mongo-password
+
+4) SERVICE  -> NOW WE WIL BE providing service to our pod (  service :  an abstract way to expose an application running on a set of Pods as a network service . with kubernetes you don't need to modify your application to use an unfamilier service discovery mechanism. kubernetes gives pods theri own ip addresses abnda a single DNS name for a set of Pods and can load-balance across them.)
+
+        it willl look like this :
+
+        in the same file we used for deployement configuration we can add below thing after --- 
+        
+        apiVersion: v1
+        kind: Service
+        metadata:
+        name: mongo-service
+        spec:
+        selector:
+            app: mongo
+        ports:
+            - protocol: TCP
+            port: 27017
+            targetPort: 27017
+
+
+    Note : in that mongo-config.yaml file we left it with this -> 
+
+            data:
+        mongo-url : # will be added later 
+
+
+        now we will rpelcae it with 
+            data:
+        mongo-url : mongo-service
+
+
+
+5) we will do it all same for web-app.yaml also :
+
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+    name: webapp-deployment
+    labels:
+        app: webapp
+    spec:
+    replicas: 1
+    selector:
+        matchLabels:
+        app: webapp
+    template:
+        metadata:
+        labels:
+            app: webapp
+        spec:
+        containers:
+        - name: mongo-express
+            image: mongo-express:latest
+            ports:
+            - containerPort: 8081
+            env:
+            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+            valueFrom:
+                secretKeyRef:
+                name: secret
+                key: mongo-user
+            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+            valueFrom:
+                secretKeyRef:
+                name: secret
+                key: mongo-password
+            - name: ME_CONFIG_MONGODB_SERVER
+            valueFrom:
+                configMapKeyRef:
+                name: mongo-config
+                key: mongo-url
+
+    ---
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+    name: webapp-service
+    spec:
+    selector:
+        app: webapp
+    ports:
+        - protocol: TCP
+        port: 8081
+        targetPort: 8081
+
+
+6) Nodeport : we will implement nodeport in web-app.yaml at service configuration . nodeprot is a fucntionality which will provide the way to connect to the ouside world by exposing the entry port for our application as port 
+
+    
+7) now just go to cmd and type >> minikube start
