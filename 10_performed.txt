@@ -1,0 +1,24 @@
+>> kubectl get pod  ( how mnay pods i have for this folder)
+
+>> kubectl apply -f secret.yaml (initialize the secrets to k8s)
+>> kubectl apply -f mongo-config.yaml (initialize the config to k8s)
+>> kubectl apply -f mongo-app.yaml (initialize the mongo-app to k8s)
+>> kubectl apply -f web-app.yaml (initialize the web-app to k8s)
+
+
+>> kubectl get pod    ( we will get two pods we created )
+>> kubectl get pod -o wide   ( we will get two pods we created in details)
+
+>> kubectl get secret   ( we will get secrets )
+>> kubectl get configmap   ( we will get configmap )
+>> kubectl get svc   ( we will get service )
+
+>> minikube ip  ( get the ip in which our pods are running )
+
+
+>> kubectl delete deployment --all ( to rmeove deployements)
+>> kubectl delete service --all ( to rmeove services)
+>> kubectl delete secret --all ( to rmeove secret)
+>> kubectl delete configmap --all ( to rmeove configmap)
+
+>> minikube service webapp-service ( to access your web app )

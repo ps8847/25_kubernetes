@@ -51,12 +51,12 @@ first we will make "Secrets" ->  there are alott of ways of adding secrets to ou
                 - name: MONGO_INITDB_ROOT_USERNAME
                 valueFrom:
                     secretKeyRef:
-                    name: secret
+                    name: mongo-secret
                     key: mongo-user
                 - name: MONGO_INITDB_ROOT_PASSWORD
                 valueFrom:
                     secretKeyRef:
-                    name: secret
+                    name: mongo-secret
                     key: mongo-password
 
 4) SERVICE  -> NOW WE WIL BE providing service to our pod (  service :  an abstract way to expose an application running on a set of Pods as a network service . with kubernetes you don't need to modify your application to use an unfamilier service discovery mechanism. kubernetes gives pods theri own ip addresses abnda a single DNS name for a set of Pods and can load-balance across them.)
@@ -92,60 +92,64 @@ first we will make "Secrets" ->  there are alott of ways of adding secrets to ou
 
 5) we will do it all same for web-app.yaml also :
 
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-    name: webapp-deployment
-    labels:
-        app: webapp
-    spec:
-    replicas: 1
-    selector:
-        matchLabels:
-        app: webapp
-    template:
+        apiVersion: apps/v1
+        kind: Deployment
         metadata:
+        name: webapp-deployment
         labels:
             app: webapp
         spec:
-        containers:
-        - name: mongo-express
-            image: mongo-express:latest
-            ports:
-            - containerPort: 8081
-            env:
-            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
-            valueFrom:
-                secretKeyRef:
-                name: secret
-                key: mongo-user
-            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
-            valueFrom:
-                secretKeyRef:
-                name: secret
-                key: mongo-password
-            - name: ME_CONFIG_MONGODB_SERVER
-            valueFrom:
-                configMapKeyRef:
-                name: mongo-config
-                key: mongo-url
+        replicas: 1
+        selector:
+            matchLabels:
+            app: webapp
+        template:
+            metadata:
+            labels:
+                app: webapp
+            spec:
+            containers:
+            - name: mongo-express
+                image: mongo-express:latest
+                ports:
+                - containerPort: 8081
+                env:
+                - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+                valueFrom:
+                    secretKeyRef:
+                    name: mongo-secret
+                    key: mongo-user
+                - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+                valueFrom:
+                    secretKeyRef:
+                    name: mongo-secret
+                    key: mongo-password
+                - name: ME_CONFIG_MONGODB_SERVER
+                valueFrom:
+                    configMapKeyRef:
+                    name: mongo-config
+                    key: mongo-url
 
-    ---
+        ---
 
-    apiVersion: v1
-    kind: Service
-    metadata:
-    name: webapp-service
-    spec:
-    selector:
-        app: webapp
-    ports:
-        - protocol: TCP
-        port: 8081
-        targetPort: 8081
+        apiVersion: v1
+        kind: Service
+        metadata:
+        name: webapp-service
+        spec:
+        type: NodePort
+        selector:
+            app: webapp
+        ports:
+            - protocol: TCP
+            port: 8081
+            targetPort: 8081
+            nodePort: 30200
 
 
 6) Nodeport : we will implement nodeport in web-app.yaml at service configuration . nodeprot is a fucntionality which will provide the way to connect to the ouside world by exposing the entry port for our application as port 
 
     
 7) now just go to cmd and type >> minikube start
+
+thats it 
